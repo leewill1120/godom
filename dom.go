@@ -118,11 +118,17 @@ func Parse(r io.Reader) (doc Document, err error) {
 				e = e.AppendChild(el)
 			}
 		case xml.CharData:
-			e.AppendChild(newText(token))
+			if nil != e {
+				e.AppendChild(newText(token))
+			}
 		case xml.Comment:
-			e.AppendChild(newComment(token))
+			if nil != e {
+				e.AppendChild(newComment(token))
+			}
 		case xml.EndElement:
-			e = e.ParentNode()
+			if nil != e {
+				e = e.ParentNode()
+			}
 		default:
 			// TODO: add handling for other types (text nodes, etc)
 		}
